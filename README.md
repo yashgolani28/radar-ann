@@ -134,6 +134,7 @@ weighted avg       1.00      1.00      1.00       200
 ```
 
 ### Confusion Matrix (Heatmap)
+![Screenshot 2025-05-04 154000](https://github.com/user-attachments/assets/4effbd36-44d2-4046-ad5a-c46cce53ff67)
 
 The heatmap visualizes the confusion matrix for the model's predictions on the test set.
 
