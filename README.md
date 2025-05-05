@@ -31,7 +31,6 @@ radar-ann/
 ├── data/                   # Contains X_train, X_test, y_train, y_test
 ├── models/                 # Trained model files (e.g., radar_model.pth)
 ├── requirements.txt        # Python dependencies
-├── .gitignore              # Ignored files and directories
 └── README.md               # Project documentation (this file)
 ```
 
