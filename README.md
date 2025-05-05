@@ -1,126 +1,119 @@
-# Radar Signal Processing with ANN
+# 📡 Radar Signal Classification using Artificial Neural Networks (ANN)
 
-This project implements a radar signal classification system using an Artificial Neural Network (ANN) in PyTorch. The model classifies radar signals (e.g., clutter, UAV, missile, human, bird) based on Short-Time Fourier Transform (STFT) and Fast Fourier Transform (FFT) preprocessing techniques. The system includes training, evaluation, and inference components, and is designed for defense applications where real-time signal classification is essential.
+This project implements a radar signal classification system using an Artificial Neural Network (ANN) in PyTorch. It supports both command-line inference and an interactive Streamlit app. The classifier distinguishes between various radar targets like **clutter**, **UAV**, **missile**, **human**, and **bird** based on FFT and STFT-based preprocessing of signal data. The system is designed with modularity, real-time capability, and defense applications in mind.
 
-## Project Structure
+---
+
+## 🚀 Features
+
+* 🧠 **PyTorch-based ANN** for radar signal classification
+* 📊 **Signal visualization** with STFT-based spectrograms
+* 🖥️ **Streamlit Web UI** for easy interaction and model inference
+* ✅ **Training, evaluation, and live inference** scripts included
+* 📁 Organized directory structure for scalable development
+* 🔧 Easily extensible for new models or signal classes
+
+---
+
+## 🗂️ Project Structure
 
 ```
-
 radar-ann/
-├── data/                   # Training and testing datasets (X\_train.npy, y\_train.npy, X\_test.npy, y\_test.npy)
-├── evaluation/             # Evaluation scripts and model evaluation (confusion matrix, heatmaps)
-├── inference/              # Inference scripts for real-time signal classification
-├── models/                 # Saved trained models (e.g., radar\_model.pth)
-├── training/               # Model training scripts and architecture
-│   └── model.py            # RadarANN architecture
-│   └── train.py            # Model training code
+├── app.py                  # Streamlit-based GUI for inference and spectrogram
+├── cli.py                  # Optional command-line interface
+├── training/
+│   ├── model.py            # RadarANN architecture (PyTorch)
+│   └── train.py            # Model training pipeline
+├── evaluation/
+│   └── evaluate.py         # Model evaluation, confusion matrix, metrics
+├── inference/
+│   └── infer.py            # Inference script for individual signals
+├── data/                   # Contains X_train, X_test, y_train, y_test
+├── models/                 # Trained model files (e.g., radar_model.pth)
 ├── requirements.txt        # Python dependencies
+├── .gitignore              # Ignored files and directories
 └── README.md               # Project documentation (this file)
+```
 
-````
+---
 
-## Requirements
+## ⚙️ Requirements
 
-1. **Python 3.x** - Make sure you're using Python 3.x to run the project.
-2. **PyTorch** - The model is built using PyTorch for deep learning.
-3. **NumPy** - For numerical operations.
-4. **Scikit-learn** - Used for metrics like confusion matrix.
-5. **Matplotlib & Seaborn** - For plotting graphs and visualizing the confusion matrix as a heatmap.
-
-You can install the required dependencies using the following command:
+Install the required Python packages using:
 
 ```bash
 pip install -r requirements.txt
-````
+```
 
-## Setup
+Dependencies include:
 
-1. Clone this repository:
+* `torch`
+* `numpy`
+* `scikit-learn`
+* `matplotlib`
+* `scipy`
+* `seaborn`
+* `streamlit`
+
+---
+
+## 🔧 Setup Instructions
+
+1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/radar-ann.git
+git clone https://github.com/yashgolani28/radar-ann.git
 cd radar-ann
 ```
 
-2. Create a virtual environment and activate it:
+2. **Create a virtual environment:**
 
 ```bash
 python -m venv venv
-# On Windows
-venv\Scripts\activate
-# On Mac/Linux
-source venv/bin/activate
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 ```
 
-3. Install dependencies:
+3. **Install the dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Place your radar signal data files in the `data/` folder. These should include:
+4. **Add your radar signal data to `data/`:**
 
-   * `X_train.npy` - Training features
-   * `y_train.npy` - Training labels
-   * `X_test.npy` - Testing features
-   * `y_test.npy` - Testing labels
+```bash
+data/
+├── X_train.npy
+├── y_train.npy
+├── X_test.npy
+└── y_test.npy
+```
 
-## Training the Model
+---
 
-The `training/train.py` script trains the radar signal classification model. It preprocesses the radar data, defines the architecture, and trains using the provided data.
+## 🏋️‍♂️ Training the Model
 
-To start training, run:
+Train your radar classifier using:
 
 ```bash
 python training/train.py
 ```
 
-This will output the training loss for each epoch and save the trained model to `models/radar_model.pth`.
+This will output training losses per epoch and save the model to `models/radar_model.pth`.
 
-## Evaluation
+---
 
-Once the model is trained, you can evaluate its performance using the `evaluation/evaluate.py` script. This will calculate the confusion matrix and display it as a heatmap.
+## 📈 Evaluation
 
-To evaluate the model, run:
+Evaluate model performance using:
 
 ```bash
 python evaluation/evaluate.py
 ```
 
-This will output precision, recall, and F1-score metrics, as well as display a heatmap of the confusion matrix.
+This will display the classification report and a confusion matrix heatmap:
 
-## Inference
-
-For real-time signal classification, use the `inference/infer.py` script. It loads the trained model and performs inference on a sample radar signal.
-
-To run inference, use:
-
-```bash
-python inference/infer.py
-```
-
-This will print the predicted class of the radar signal.
-
-## Model Architecture
-
-The model used in this project is a simple feed-forward neural network with one hidden layer. The architecture is as follows:
-
-* **Input layer**: Accepts the radar signal features.
-* **Hidden layer**: 64 neurons with ReLU activation.
-* **Output layer**: 3 output classes (Clutter, UAV, Missile, etc.) using softmax activation.
-
-## Example Output
-
-### Training:
-
-```
-Epoch 1, Loss: 0.0506
-Epoch 2, Loss: 0.0065
-...
-Epoch 20, Loss: 0.0003
-```
-
-### Evaluation:
+**Example Output:**
 
 ```
 precision    recall  f1-score   support
@@ -129,19 +122,80 @@ precision    recall  f1-score   support
 2       1.00      1.00      1.00        67
 
 accuracy                           1.00       200
-macro avg       1.00      1.00      1.00       200
-weighted avg       1.00      1.00      1.00       200
 ```
 
-### Confusion Matrix (Heatmap)
-![Screenshot 2025-05-04 154000](https://github.com/user-attachments/assets/4effbd36-44d2-4046-ad5a-c46cce53ff67)
+📊 **Confusion Matrix Heatmap**
+![Confusion Matrix Heatmap](https://github.com/user-attachments/assets/4effbd36-44d2-4046-ad5a-c46cce53ff67)
 
-The heatmap visualizes the confusion matrix for the model's predictions on the test set.
+---
 
-## Future Work
+## ⚡ Inference (CLI)
 
-* **Model Improvement**: Experiment with more complex architectures such as CNNs or RNNs.
-* **Real-Time Signal Processing**: Integrate this model into real-time systems for continuous radar signal classification.
-* **Advanced Preprocessing**: Experiment with different signal preprocessing techniques like wavelet transforms.
+To classify a single `.npy` radar signal file via command line:
+
+```bash
+python inference/infer.py --file data/sample.npy
+```
+
+It will load the trained model and print the predicted class.
+
+---
+
+## 🖼️ Streamlit App
+
+Launch the interactive radar signal classification dashboard:
+
+```bash
+streamlit run app.py
+```
+![Screenshot 2025-05-05 201759](https://github.com/user-attachments/assets/ce0c7629-fdda-4849-8ebd-2432ce6f807c)
+![Screenshot 2025-05-05 201821](https://github.com/user-attachments/assets/f0a65040-74d5-4a1e-b8c4-c0f8fbf47142)
+![Screenshot 2025-05-05 201900](https://github.com/user-attachments/assets/e56187a7-55f1-4939-85ae-8b1dc869eeb2)
+![Screenshot 2025-05-05 201830](https://github.com/user-attachments/assets/3a64c00b-e376-4217-ab0d-e18a985d9c1e)
+
+### Web App Features:
+
+* Upload `.npy` radar signal or pick a test sample
+* View predicted class
+* See spectrogram visualization with STFT
+* Real-time inference through UI
+
+---
+
+## 🧠 Model Architecture
+
+```text
+Input Layer → Linear(128) → ReLU → Linear(num_classes) → Softmax
+```
+
+* Input size depends on your radar data dimensions
+* Hidden layer with 128 neurons and ReLU activation
+* Output layer for classification
+
+---
+
+## 🧪 Example Output
+
+**Training Logs:**
 
 ```
+Epoch 1, Loss: 0.0506
+Epoch 2, Loss: 0.0065
+...
+Epoch 20, Loss: 0.0003
+```
+
+**Predicted Classes from Streamlit App:**
+
+> ✅ Predicted Class: Missile
+
+---
+
+## 📌 TODO & Future Work
+
+* [ ] Add support for more complex models (LSTMs)
+* [ ] Integrate with real-time radar hardware input
+* [ ] Experiment with alternative time-frequency transformations (e.g., Wavelet)
+* [ ] Add test coverage and unit tests
+
+
