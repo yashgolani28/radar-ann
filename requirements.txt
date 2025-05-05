@@ -7,3 +7,6 @@ torchvision
 torchaudio
 notebook
 opencv-python
+streamlit
+seaborn
+tqdm
